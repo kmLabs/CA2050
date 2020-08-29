@@ -22,6 +22,9 @@
   <div id='mapLeft'></div>
   <div id='mapRight'></div>
 
+
+  <div id='middleDivider'></div>
+
   <div id='console'>
     <img src ='kmLABS_LOGOwhite.png' alt = 'km.L'
                                  style = 'width:105px;height:32px;margin-top:5px;'>
@@ -60,8 +63,8 @@
 
 
       <div class='session' id='sliderbar'>
-          <h5>Active Layer: </h5>
-          <h6><label id='active-timestamp'>CA 2050 business as usual</label></h6>
+          <h5>2020 Climate Conditions </h5>
+          <h6><label id='active-timestamp'>Mid-Century High Emissions RCP8.5 (Hot Scenario)</label></h6>
           <!--  <input id='slider' class='sliderConst' type='range' min='0' max='3' step='1' value='0' />
            ^^^slider somehow controls color bars/layer selection
           <div class= 'scale'>-->
@@ -73,8 +76,8 @@
  			    <h3>Active Layer Cell Value: <label id='hover-cell'>N/A</label></h3>
  	    </div>
 -->
-      <div class='dynamicData' id='firstLayerValue'><h2> CA 2020: &nbsp; <label id='hover-cell-1'>N/A</label></h2><div class='movableBar' id='movableBar1'></div></div>
-      <div class='dynamicData' id='secondLayerValue'><h2><label id ='secondLayerLabel'>CA 2050:</label> &nbsp; <label id='hover-cell-2'>N/A</label></h2><div class='movableBar' id='movableBar2'></div></div>
+      <div class='dynamicData' id='firstLayerValue'><h2> 2020: &nbsp; <label id='hover-cell-1'>N/A</label></h2><div class='movableBar' id='movableBar1'></div></div>
+      <div class='dynamicData' id='secondLayerValue'><h2><label id ='secondLayerLabel'>2050:</label> &nbsp; <label id='hover-cell-2'>N/A</label></h2><div class='movableBar' id='movableBar2'></div></div>
 
 
 </div>
@@ -83,12 +86,12 @@
 
 
 <div id = 'layerDropMenu' class = 'dropMenuClass'>
-  <button id = 'dropbtn' class="dropbtn">Layer Select</button>
+  <button id = 'dropbtn' class="dropbtn">Mid-Century Scenario</button>
     <div id = 'dropdown-content' class="dropdown-content">
-      <h4>CA 2050 business as usual</h4>
-      <h4>CA 2050 business as usual + cool roofs</h4>
-      <h4>CA 2050 climate mitigation</h4>
-      <h4>CA 2050 climate mitigation + cool roofs</h4>
+      <h4>Mid-Century High Emissions RCP8.5 (Hot Scenario)</h4>
+      <h4>Mid-Century High Emissions RCP8.5 + Cool Roofs</h4>
+      <h4>Mid-Century Low Emissions RCP4.5 (Cool Scenario)</h4>
+      <h4>Mid-Century Low Emissions RCP4.5 + Cool Roofs</h4>
     </div>
 
 </div>
@@ -131,7 +134,7 @@ map.on('load', function() {
   var layer_IDs = [];
   var maxValue = 37; //this should change for each dataset
   var minValue = 3; //this should change for each dataset
-  var barWidth = 100; //measured in px, should change if legend is changed
+  var barWidth = 150; //was 100 //measured in px, should change if legend is changed
 
 
 
@@ -217,7 +220,7 @@ var labelLayerId;
           }
         }
         map.setPaintProperty(active_layer, 'fill-opacity', 0);
-        console.log(active_layer);
+        //console.log(active_layer);
 
         //change color of 3-D layer
         //Need to loop through and change every grid id to its own color
@@ -232,10 +235,10 @@ var labelLayerId;
          filter: ["==", "type", "feature"]
      }
      );
-     console.log(features[0]);
-     console.log(features1[0]);
-     console.log(features1[0]._vectorTileFeature._x + " = x-coordinate"); //
-     console.log(features1.length);
+     //console.log(features[0]);
+     //console.log(features1[0]);
+     //console.log(features1[0]._vectorTileFeature._x + " = x-coordinate"); //
+     //console.log(features1.length);
 
         var gridcodeNum = features[0].properties.temp; //changed from gridcode to temp
         var buildingColor = detGridColor(gridcodeNum);
@@ -248,85 +251,6 @@ var labelLayerId;
     });
 
     //Use everything in this event and move to the dropdown menu control^^^
-
-    //THIS WILL NOT BE NECESSARY ONCE YOU MAKE THE SWITCH
-    //Changes the layer visible via slider and sets a new active-timestamp
-  /*  document.getElementById('slider').addEventListener('input', function(e) {
-        var time_selection = parseInt(e.target.value); //time_selection gets what number the slider is on
-        var selected_layer; //selected_layer gets layer ID
-        var active_layer; // layer that is completely visible
-
-        if (time_selection === 0){
-          active_layer = "temp-midcentury-v3";
-          selected_layer = "temp-current-v3";
-          document.getElementById('active-timestamp').innerText = "Current"; //changes number next to timestamp
-          document.getElementById('secondLayerLabel').innerText = "Current"; //changes title of second layer
-
-        }
-        else if (time_selection === 1){
-          //active_layer = "temp-current-v3";
-          //selected_layer = "temp-midcentury-v3";
-          document.getElementById('active-timestamp').innerText = "2030"; //changes number next to timestamp
-          document.getElementById('secondLayerLabel').innerText = "2030"; //changes title of second layer
-        }
-        else if (time_selection === 2){
-          //active_layer = "temp-current-v3";
-          //selected_layer = "temp-midcentury-v3";
-          document.getElementById('active-timestamp').innerText = "2040"; //changes number next to timestamp
-          document.getElementById('secondLayerLabel').innerText = "2040"; //changes title of second layer
-        }
-        else if (time_selection === 3){
-          //active_layer = "temp-current-v3";
-          //selected_layer = "temp-midcentury-v3";
-          document.getElementById('active-timestamp').innerText = "2050"; //changes number next to timestamp
-          document.getElementById('secondLayerLabel').innerText = "2050"; //changes title of second layer
-        }
-
-        else {
-          console.log("ERR on slider grab")
-        }
-
-
-        for (var i = 0; i < layer_IDs.length; i++){
-          var ID = layer_IDs[i];
-          if (ID === selected_layer){ //TRY CHANGING THIS TO FEATURE STATE
-            map.setPaintProperty(selected_layer, 'fill-opacity', 0.65);
-          }
-        }
-        map.setPaintProperty(active_layer, 'fill-opacity', 0);
-        console.log(active_layer);
-
-        //change color of 3-D layer
-        //Need to loop through and change every grid id to its own color
-        var buildingLayer = '3d-buildings';
-        var features = map.queryRenderedFeatures(e.point, {layers: [selected_layer]}); //returns an array of objects
-        var features1 = map.queryRenderedFeatures(e.point, {layers: ['3d-buildings']}); //returns an array of objects
-
-        var myFeatures = map.querySourceFeatures('composite',
-     {
-         sourceLayer: 'building',
-        // i'm confident there is data matching this filter
-         filter: ["==", "type", "feature"]
-     }
-     );
-     console.log(features[0]);
-     console.log(features1[0]);
-     console.log(features1[0]._vectorTileFeature._x + " = x-coordinate"); //
-     console.log(features1.length);
-
-        var gridcodeNum = features[0].properties.temp; //changed from gridcode to temp
-        var buildingColor = detGridColor(gridcodeNum);
-        map.setPaintProperty('3d-buildings', 'fill-extrusion-color', buildingColor);
-
-
-    console.log(map.getLayer(features));
-
-
-
-
-
-  });   */
-
 
 function detGridColor(gridNum){
   var newColor = "";
@@ -385,7 +309,7 @@ function detGridColor(gridNum){
     }
     //otherwise, make visible and move button back
     else{
-      document.getElementById("consoleControl").style.left = "310px";
+      document.getElementById("consoleControl").style.left = "385px";
       document.getElementById("console").style.visibility = "visible";
       document.getElementById("ccText").innerHTML = "Hide";
       consoleStatus = "visible";
@@ -398,39 +322,72 @@ function detGridColor(gridNum){
 
 
 //Gets value of cell hovered over
-	map.on('mousemove', 'temp-current-v3' , function (e) { //'temp-current-v3 is arbitrary
+	map.on('mousemove', 'Current-v5' , function (e) { //'temp-current-v3 is arbitrary
     //Gets value for active layer
     //only needed here for hover
     var active_layer = document.getElementById('active-timestamp').innerText;
 //added
+    var active_layer_ID;
+
+    if (active_layer === 'Mid-Century High Emissions RCP8.5 (Hot Scenario)') {
+      active_layer_ID = 'Midcentury-rcp85-v5';
+    }
+    else if (active_layer === 'Mid-Century High Emissions RCP8.5 + Cool Roofs') {
+      active_layer_ID = 'Midcentury-rcp85-coolroof-v5';
+    }
+    else if (active_layer === 'Mid-Century Low Emissions RCP4.5 (Cool Scenario)') {
+      active_layer_ID = 'Midcentury-rcp45-v5';
+    }
+    else if (active_layer === 'Mid-Century Low Emissions RCP4.5 + Cool Roofs') {
+      active_layer_ID = 'Midcentury-rcp45-coolroof-v5';
+    }
+    else {
+      console.log('not working');
+    }
 
 
-
-    for (var i = 0; i < layer_IDs.length; i++){
       var visibleValue;
-      //var current_layer = 'time-series' + (i+1);
-      var current_layer = layer_IDs[i];
-      var divID = 'hover-cell-' + (i+1);
-      var features = map.queryRenderedFeatures(e.point, {layers: [current_layer]}); //returns an array of objects
-      console.log(features[0]);
+
+      var features = map.queryRenderedFeatures(e.point, {layers: ['Current-v5']}); //returns an array of objects
+      //console.log(features[0]);
       var cell_value = features[0].properties.temp; //accesses gridcode object (CHANGED TO TEMP)
       var Cvalue = cell_value.toFixed(2) + "&deg;C"; //puts together celcius
       var Fvalue = (cell_value*1.8 + 32).toFixed(2) + "&deg;F"; //puts together farenheight
 
+
+      var visibleValue2050;
+
+      var features2050 = map.queryRenderedFeatures(e.point, {layers: [active_layer_ID]}); //returns an array of objects
+      //console.log(features[0]);
+      var cell_value2050 = features2050[0].properties.temp; //accesses gridcode object (CHANGED TO TEMP)
+      var Cvalue2050 = cell_value.toFixed(2) + "&deg;C"; //puts together celcius
+      var Fvalue2050 = (cell_value2050*1.8 + 32).toFixed(2) + "&deg;F"; //puts together farenheight
+
+
+
+
+
+
+
       // sets the dynamic values to celcius or farenheight
       if (document.getElementsByName('CtoFbutton')[0].checked){
         visibleValue = Cvalue;
+        visibleValue2050 = Cvalue2050;
       }
       else{
         visibleValue = Fvalue;
+        visibleValue2050 = Fvalue2050;
       }
-      document.getElementById(divID).innerHTML = visibleValue;
+      document.getElementById('hover-cell-1').innerHTML = visibleValue;
+      document.getElementById('hover-cell-2').innerHTML = visibleValue2050;
+
+
 
 
       //Change movable bar length
       var barPercentage = (cell_value - minValue)/(maxValue - minValue)*barWidth;
       var newBarWidth = barPercentage + "px";
-      var barID = "movableBar" + (i+1);
+      var barID = "movableBar1";
       document.getElementById(barID).style.width = newBarWidth;
 
       //change movable bar color
@@ -448,19 +405,49 @@ function detGridColor(gridNum){
         case cell_value<timeSeriesStops[3]:
           newColor = timeSeriesColors[3];
           break;
-        case cell_value>=timeSeriesStops[3]:
+        case cell_value<timeSeriesStops[4]:
           newColor = timeSeriesColors[4];
           break;
-      }
+        case cell_value>=timeSeriesStops[4]:
+          newColor = timeSeriesColors[5];
+          break;
+        }
       document.getElementById(barID).style.backgroundColor = newColor;
 
 
-      //change "active_layer" value
-      if (current_layer === active_layer){
-        document.getElementById('hover-cell').innerHTML = visibleValue;
-      }
+    //-----------
 
-    }
+    //Change movable bar length
+    var barPercentage2050 = (cell_value2050 - minValue)/(maxValue - minValue)*barWidth;
+    var newBarWidth2050 = barPercentage2050 + "px";
+    var barID2050 = "movableBar2";
+    document.getElementById(barID2050).style.width = newBarWidth2050;
+
+    //change movable bar color
+    var newColor2050 = "";
+    switch (true){
+      case cell_value2050<timeSeriesStops[0]:
+          newColor2050 = timeSeriesColors[0];
+          break;
+      case cell_value2050<timeSeriesStops[1]:
+        newColor2050 = timeSeriesColors[1];
+        break;
+      case cell_value2050<timeSeriesStops[2]:
+        newColor2050 = timeSeriesColors[2];
+        break;
+      case cell_value2050<timeSeriesStops[3]:
+        newColor2050 = timeSeriesColors[3];
+        break;
+      case cell_value2050<timeSeriesStops[4]:
+        newColor2050 = timeSeriesColors[4];
+        break;
+      case cell_value2050>=timeSeriesStops[4]:
+        newColor2050 = timeSeriesColors[5];
+        break;
+      }
+    document.getElementById(barID2050).style.backgroundColor = newColor2050;
+
+
 
 	});
 });
@@ -482,7 +469,7 @@ function detGridColor(gridNum){
         var layer_IDs = [];
         var maxValue = 37; //this should change for each dataset
         var minValue = 3; //this should change for each dataset
-        var barWidth = 100; //measured in px, should change if legend is changed
+        var barWidth = 150; //measured in px, should change if legend is changed
 
 
 
@@ -516,22 +503,238 @@ function detGridColor(gridNum){
               layer_IDs.push(obj.id); //adds names of all layers to an array
             });
 
+            console.log(layer_IDs[1]);
+
+
+
+            mapRight.addLayer({
+              'id': '3d-buildings',
+              'source': 'composite',
+              'source-layer': 'building',
+              'filter': ['==', 'extrude', 'true'],
+              'type': 'fill-extrusion',
+              'minzoom': 15,
+              'light': {"intensity":0.5,"anchor":"viewport"},
+              'paint': {
+                  'fill-extrusion-color': 'white',
+                  // use an 'interpolate' expression to add a smooth transition effect to the
+                  // buildings as the user zooms in
+                  'fill-extrusion-height': [
+                  "interpolate", ["linear"], ["zoom"],
+                  15, 0,
+                  15.05, ["get", "height"]
+                  ],
+                  'fill-extrusion-base': [
+                  "interpolate", ["linear"], ["zoom"],
+                  15, 0,
+                  15.05, ["get", "min_height"]
+                  ],
+                  'fill-extrusion-opacity': 0.85,
+
+                  }
+            }, firstSymbolId);
 
 
 
 
-          //makes first layer visible at start
-          mapRight.setPaintProperty(layer_IDs[0], 'fill-opacity',0.65);
+
+
+
+            var selected_layer_right;
+            var active_layer_right = layer_IDs[1];
+
+          //makes rcp4.5 layer visible at start
+          mapRight.setPaintProperty(layer_IDs[1], 'fill-opacity',0.65);
           console.log("checkpoint1");
 
-          document.getElementById('dropdown-content').addEventListener('input', function(e) {
-            console.log("checkpoint2");
+
+
           mapRight.jumpTo({
             center: [GlobalLat, GlobalLong],
             zoom: GlobalZoom});
+
+
+// Change RightMap visible layer when dropdown menu is clicked on
+          document.getElementById('dropdown-content').addEventListener('click', function(e) {
+            console.log("checkpoint2");
+
+//if statement gets selected layer
+            if (e.target.innerText === 'Mid-Century High Emissions RCP8.5 (Hot Scenario)') {
+              selected_layer_right = 'Midcentury-rcp85-v5-RightMap';
+              console.log("8.5");
+
+            }
+            else if (e.target.innerText === 'Mid-Century High Emissions RCP8.5 + Cool Roofs') {
+              selected_layer_right = 'Midcentury-rcp85-coolroof-v5-RightMap';
+              console.log("8.5 cool roof");
+
+            }
+            else if (e.target.innerText === 'Mid-Century Low Emissions RCP4.5 (Cool Scenario)') {
+              selected_layer_right = 'Midcentury-rcp45-v5-RightMap';
+              console.log("8.5");
+
+            }
+            else if (e.target.innerText === 'Mid-Century Low Emissions RCP4.5 + Cool Roofs') {
+              selected_layer_right = 'Midcentury-rcp45-coolroof-v5-RightMap';
+              console.log("8.5");
+
+            }
+            else {
+              console.log('not working');
+            }
+
+            mapRight.setPaintProperty(active_layer_right, 'fill-opacity', 0);
+            mapRight.setPaintProperty(selected_layer_right, 'fill-opacity', 0.65);
+
+            active_layer_right = selected_layer_right;
+
+
+            //Next add in data readability
+
           });
 
-            //https://docs.mapbox.com/mapbox-gl-js/api/#map#on
+          mapRight.getCanvas().style.cursor = 'default';
+
+//--------------------------
+
+//Gets value of cell hovered over
+
+
+	mapRight.on('mousemove', 'Midcentury-rcp85-v5-RightMap' , function (e) { //'temp-current-v3 is arbitrary
+
+    //Gets value for active layer
+    var active_layer_right = document.getElementById('active-timestamp').innerText;
+    //Note that the inner text will need to be changed to the layer name at some point
+    var active_layer_right_ID;
+
+//this can be changed if I have the active layer b/c I don't need all the values...
+
+
+
+
+//if statement gets selected layer (can probably be out of the move function)
+            if (active_layer_right === 'Mid-Century High Emissions RCP8.5 (Hot Scenario)') {
+              active_layer_right_ID = 'Midcentury-rcp85-v5-RightMap';
+            }
+            else if (active_layer_right === 'Mid-Century High Emissions RCP8.5 + Cool Roofs') {
+              active_layer_right_ID = 'Midcentury-rcp85-coolroof-v5-RightMap';
+            }
+            else if (active_layer_right === 'Mid-Century Low Emissions RCP4.5 (Cool Scenario)') {
+              active_layer_right_ID = 'Midcentury-rcp45-v5-RightMap';
+            }
+            else if (active_layer_right === 'Mid-Century Low Emissions RCP4.5 + Cool Roofs') {
+              active_layer_right_ID = 'Midcentury-rcp45-coolroof-v5-RightMap';
+            }
+            else {
+              console.log('not working');
+            }
+
+
+      var visibleValue;
+      var visibleCurValue;
+      //var current_layer = 'time-series' + (i+1);
+      var current_layer = layer_IDs[i]; //can be replcaed by active_layer_right_ID
+      //var divID = 'hover-cell-' + (i+1);
+
+
+      //Changes calues for the 2050 selected scenario when hovering over right map
+      var features = mapRight.queryRenderedFeatures(e.point, {layers: [active_layer_right_ID]}); //returns an array of objects
+      var cell_value = features[0].properties.temp; //accesses gridcode object (CHANGED TO TEMP)
+      var Cvalue = cell_value.toFixed(2) + "&deg;C"; //puts together celcius
+      var Fvalue = (cell_value*1.8 + 32).toFixed(2) + "&deg;F"; //puts together farenheight
+
+
+      //Changes value for the 2020 scenario when hovering over RightMap
+      var CurFeatures = mapRight.queryRenderedFeatures(e.point, {layers: [layer_IDs[0]]});
+      var Curcell_value = CurFeatures[0].properties.temp; //accesses gridcode object (CHANGED TO TEMP)
+      var CurCvalue = Curcell_value.toFixed(2) + "&deg;C"; //puts together celcius
+      var CurFvalue = (Curcell_value*1.8 + 32).toFixed(2) + "&deg;F"; //puts together farenheight
+
+      // sets the dynamic values to celcius or farenheight
+      if (document.getElementsByName('CtoFbutton')[0].checked){
+        visibleValue = Cvalue;
+        visibleCurValue = CurCvalue;
+      }
+      else{
+        visibleValue = Fvalue;
+        visibleCurValue = CurFvalue;
+      }
+
+      //change this ID to the div ID of the text
+      document.getElementById('hover-cell-2').innerHTML = visibleValue;
+      document.getElementById('hover-cell-1').innerHTML = visibleCurValue;
+
+
+      //Change movable bar length
+      var barPercentage = (cell_value - minValue)/(maxValue - minValue)*barWidth;
+      var newBarWidth = barPercentage + "px";
+      var barID = "movableBar2";
+      document.getElementById(barID).style.width = newBarWidth;
+
+
+      //change movable bar color
+      var newColor = "";
+      switch (true){
+        case cell_value<timeSeriesStops[0]:
+            newColor = timeSeriesColors[0];
+            break;
+        case cell_value<timeSeriesStops[1]:
+          newColor = timeSeriesColors[1];
+          break;
+        case cell_value<timeSeriesStops[2]:
+          newColor = timeSeriesColors[2];
+          break;
+        case cell_value<timeSeriesStops[3]:
+          newColor = timeSeriesColors[3];
+          break;
+        case cell_value<timeSeriesStops[4]:
+          newColor = timeSeriesColors[4];
+          break;
+        case cell_value>=timeSeriesStops[4]:
+          newColor = timeSeriesColors[5];
+          break;
+      }
+      document.getElementById("movableBar2").style.backgroundColor = newColor;
+
+
+//Change bar color and width for cur layers
+
+//Change movable bar length
+var CurbarPercentage = (Curcell_value - minValue)/(maxValue - minValue)*barWidth;
+var CurnewBarWidth = CurbarPercentage + "px";
+var CurbarID = "movableBar1";
+document.getElementById(CurbarID).style.width = CurnewBarWidth;
+
+
+//change movable bar color
+var CurnewColor = "";
+switch (true){
+  case Curcell_value<timeSeriesStops[0]:
+      CurnewColor = timeSeriesColors[0];
+      break;
+  case Curcell_value<timeSeriesStops[1]:
+    CurnewColor = timeSeriesColors[1];
+    break;
+  case Curcell_value<timeSeriesStops[2]:
+    CurnewColor = timeSeriesColors[2];
+    break;
+  case Curcell_value<timeSeriesStops[3]:
+    CurnewColor = timeSeriesColors[3];
+    break;
+  case Curcell_value<timeSeriesStops[4]:
+    CurnewColor = timeSeriesColors[4];
+    break;
+  case Curcell_value>=timeSeriesStops[4]:
+    CurnewColor = timeSeriesColors[5];
+    break;
+}
+document.getElementById("movableBar1").style.backgroundColor = CurnewColor;
+
+
+
+
+	});
+
 
 });
 

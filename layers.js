@@ -70,34 +70,49 @@ const dataPaint = {
 const mapLayers = [
 
   [{
-      'id': 'temp-current-v3',
-      'type': 'fill',
-      'source': 'tempCurrent_v3',
-      'source-layer': 'Current_W999Null-50do4l',
-      //'fill-color' : '#fef0d9',
-      'paint': dataPaint,
-      /*'paint': {
-        'fill-color': [
-            "step",
-            ["get", "temp"],
-            "red", 7,
-            "orange", 14,
-            "yellow", 21,
-            "green", 28,
-            "blue"
-
-          ],
-
-      },
-      */
-      'layout': {}
-
-  }],
-  [{
-    'id': 'temp-midcentury-v3',
+    'id': 'Current-v5',
     'type': 'fill',
-    'source': 'tempMidcentury_v3',
-    'source-layer': 'MidCen_W999Null-a9ruiw',
+    'source': 'Current_v5',
+    'source-layer': 'current_WRFOUT_airtemp_v5-4oufal',
+    'paint': dataPaint,
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp45-v5',
+    'type': 'fill',
+    'source': 'Midcentury_rcp45_v5',
+    'source-layer': 'rcp45_WRFOUT_airtemp_v5_midce-0e2j75',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp45-coolroof-v5',
+    'type': 'fill',
+    'source': 'Midcentury_rcp45_coolroof_v5',
+    'source-layer': 'rcp45_coolroof_WRFOUT_airtemp-25nvxo',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp85-v5',
+    'type': 'fill',
+    'source': 'Midcentury_rcp85_v5',
+    'source-layer': 'rcp85_WRFOUT_airtemp_v5_midce-5a3iio',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp85-coolroof-v5',
+    'type': 'fill',
+    'source': 'Midcentury_rcp85_coolroof_v5',
+    'source-layer': 'rcp85_coolroof_WRFOUT_airtemp-07423a',
     'paint': dataPaint,
 
     'layout': {}
@@ -109,24 +124,55 @@ const mapLayers = [
 
 const mapLayersRight = [
   [{
-    'id': 'temp-midcentury-v3_right',
+    'id': 'Current-v5-RightMap',
     'type': 'fill',
-    'source': 'tempMidcentury_v3_RightMap',
-    'source-layer': 'WRFOUT_airtemp_Proj_geo_em_d0-7qwua7',
+    'source': 'Current_v5_RightMap',
+    'source-layer': 'current_WRFOUT_airtemp_v5-6tm981',
     'paint': dataPaint,
 
     'layout': {}
   }],
 
   [{
-    'id': 'temp-current-v3_right',
+    'id': 'Midcentury-rcp45-v5-RightMap',
     'type': 'fill',
-    'source': 'tempCurrent_v3_RightMap',
-    'source-layer': 'WRFOUT_airtemp_Proj_geo_em_d0-1l4gvs',
+    'source': 'Midcentury_rcp45_v5_RightMap',
+    'source-layer': 'rcp45_WRFOUT_airtemp_v5_midce-3ecsz4',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp45-coolroof-v5-RightMap',
+    'type': 'fill',
+    'source': 'Midcentury_rcp45_coolroof_v5_RightMap',
+    'source-layer': 'rcp45_coolroof_WRFOUT_airtemp-6izygx',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp85-v5-RightMap',
+    'type': 'fill',
+    'source': 'Midcentury_rcp85_v5_RightMap',
+    'source-layer': 'rcp85_WRFOUT_airtemp_v5_midce-5rwwcv',
+    'paint': dataPaint,
+
+    'layout': {}
+  }],
+
+  [{
+    'id': 'Midcentury-rcp85-coolroof-v5-RightMap',
+    'type': 'fill',
+    'source': 'Midcentury_rcp85_coolroof_v5_RightMap',
+    'source-layer': 'rcp85_coolroof_WRFOUT_airtemp-5togqx',
     'paint': dataPaint,
 
     'layout': {}
   }]
+
 
 
 ];
