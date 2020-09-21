@@ -49,12 +49,12 @@
       </div>
 
 
-      <div class='scale'>
-        <div id = 'tempClass1' class='tempLabel'>7</div>
-        <div id = 'tempClass2' class='tempLabel'>12</div>
-        <div id = 'tempClass3' class='tempLabel'>17</div>
-        <div id = 'tempClass4'class='tempLabel'>22</div>
-        <div id = 'tempClass5' class='tempLabel'>27</div>
+      <div class='labelScale'>
+        <div id = 'tempClass1' class='tempLabel'></div>
+        <div id = 'tempClass2' class='tempLabel'>7</div>
+        <div id = 'tempClass3' class='tempLabel'>14</div>
+        <div id = 'tempClass4'class='tempLabel'>21</div>
+        <div id = 'tempClass5' class='tempLabel'>28</div>
       </div>
 
 
@@ -278,18 +278,18 @@ function detGridColor(gridNum){
 //changes legend color bar values
   document.getElementById('CtoFconverter').addEventListener("click", function(){
     if (document.getElementsByName('CtoFbutton')[0].checked){
-      document.getElementById("tempClass1").innerHTML = "7";
-      document.getElementById("tempClass2").innerHTML = "14";
-      document.getElementById("tempClass3").innerHTML = "21";
-      document.getElementById("tempClass4").innerHTML = "28";
-      document.getElementById("tempClass5").innerHTML = "??";
+      document.getElementById("tempClass1").innerHTML = "";
+      document.getElementById("tempClass2").innerHTML = "7";
+      document.getElementById("tempClass3").innerHTML = "14";
+      document.getElementById("tempClass4").innerHTML = "21";
+      document.getElementById("tempClass5").innerHTML = "28";
     }
     else{
-      document.getElementById("tempClass1").innerHTML = "44.6";
-      document.getElementById("tempClass2").innerHTML = "53.6";
-      document.getElementById("tempClass3").innerHTML = "62.6";
-      document.getElementById("tempClass4").innerHTML = "71.6";
-      document.getElementById("tempClass5").innerHTML = "80.6";
+      document.getElementById("tempClass1").innerHTML = "";
+      document.getElementById("tempClass2").innerHTML = "44.6";
+      document.getElementById("tempClass3").innerHTML = "57.2";
+      document.getElementById("tempClass4").innerHTML = "69.8";
+      document.getElementById("tempClass5").innerHTML = "82.4";
 
 
 
@@ -362,8 +362,6 @@ function detGridColor(gridNum){
       var cell_value2050 = features2050[0].properties.temp; //accesses gridcode object (CHANGED TO TEMP)
       var Cvalue2050 = cell_value2050.toFixed(2) + "&deg;C"; //puts together celcius
       var Fvalue2050 = (cell_value2050*1.8 + 32).toFixed(2) + "&deg;F"; //puts together farenheight
-
-
 
 
 

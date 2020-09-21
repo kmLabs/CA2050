@@ -123,9 +123,13 @@ a {
 
 .scale {
   height: 20px;
-  width: 100%;
+  width: 98%;
 }
 
+.labelScale {
+  height: 20px;
+  width: 100%
+}
 
 .sliderConst{
   height: 20px;
@@ -144,10 +148,10 @@ a {
 
 
 .tempLabel {
-  width: 18.5%;
+  width: 57.5px;
   font-size: 14px;
   display: inline-block;
-  text-align: center;
+  text-align: left;
   color: white;
 
 }
